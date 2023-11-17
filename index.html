@@ -6,6 +6,7 @@
     <title>HexFlagGen</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="https://cdn.abtmtr.link/cdn/css/normal.css" />
+    <link rel="stylesheet" href="https://cdn.abtmtr.link/cdn/css/normal.css" />
     <style>
       @import url("https://fonts.googleapis.com/css2?family=Lexend+Deca:wght@100;200;300;400;500;600;700;800;900&display=swap");
 
@@ -21,7 +22,7 @@
       }
 
       * {
-        transition: background-color 0.125s, color 0.125s;
+        transition: background-color 0.125s, color 0.125s, opacity 0.125s;
       }
     </style>
   </head>
@@ -48,30 +49,29 @@
         Base style
       </label>
       <p>by <a href="https://abtmtr.link/">MeowcaTheoRange</a></p>
-      <p>
-        Welcome, here you can make a flag out of the hexadecimal bytes of your
-        choice!
-      </p>
+      <p>Make a Scott The Woz thumbnail out of any Steam game.</p>
     </section>
     <hr />
     <section>
-      <label for="data">Generator string</label><br />
       <input
-        type="text"
-        id="data"
-        value="5BCEFAF5A9B8FFFFFFF5A9B85BCEFABA53"
-        style="width: 100%"
-      /><br />
+        type="number"
+        id="steam_game"
+        style="width: 8ch"
+        min="10"
+        value="620"
+      />
+      <label for="steam_game">Steam Game ID</label><br />
       <button id="generateButton">Generate!</button>
     </section>
     <section>
+      <label for="scott_index">Extras</label><br />
       <input
         type="number"
-        id="size_width"
+        id="scott_index"
         style="width: 8ch"
         min="0"
-        max="3000"
-        value="300"
+        max="9"
+        value="0"
       />
       <label for="size_width">Width (px)</label><br />
       <input
@@ -87,14 +87,11 @@
         <option value="vert" selected>Vertical</option>
         <option value="horiz">Horizontal</option>
       </select>
-      <label for="flag_type">Flag type</label>
+      <label for="align">Background Alignment</label>
     </section>
     <hr />
     <section>
-      <p>
-        Hex: <code><span id="hexdisplay">...</span></code>
-      </p>
-      <canvas id="canvas" width="300" height="200"></canvas>
+      <canvas id="canvas" width="1280" height="720"></canvas>
     </section>
     <script src="scripts/index.js"></script>
   </body>
