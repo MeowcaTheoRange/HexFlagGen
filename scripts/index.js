@@ -3,113 +3,79 @@ const data = document.getElementById("data");
 const generateButton = document.getElementById("generateButton");
 const hexdisplay = document.getElementById("hexdisplay");
 
-const size_width = document.getElementById("size_width");
-const size_height = document.getElementById("size_height");
-const flag_type = document.getElementById("flag_type");
+const steam_game = document.getElementById("steam_game");
+const scott_index = document.getElementById("scott_index");
+const stash = document.getElementById("stash");
+const align = document.getElementById("align");
 
 const root = document.querySelector(":root");
 
 const ctx = canvas.getContext("2d");
 
-function getData() {
-  data.value = data.value.toUpperCase().replace(/[^0-9A-F]*/g, "");
-
-  var hexValue = data.value.match(/.{1,2}/g).map((x) => x.padStart(2, "0"));
-
-  hexdisplay.innerHTML = hexValue.join(" ");
-
-  createFlag(
-    hexValue.join("").match(/.{1,6}/g),
-    size_width.value,
-    size_height.value,
-    flag_type.value
-  );
-  var ac = averageColors(hexValue);
-  console.log(ac);
-  root.style.setProperty(
-    "--background-color",
-    arrayToColor(darkenColor(ac, 70))
-  );
-  root.style.setProperty("--color", arrayToColor(lightenColor(ac, 70)));
-  root.style.setProperty("--accent-color", arrayToColor(ac));
-  root.style.setProperty(
-    "--accent-color-fg",
-    arrayToColor(lightenColor(ac, 90))
-  );
-}
-generateButton.addEventListener("click", getData);
-
-function averageColors(hex) {
-  var averageSet = [[], [], []];
-  hex.forEach((number, index) => {
-    averageSet[index % 3].push(parseInt(number, 16));
+async function loadImage(url) {
+  return new Promise((r) => {
+    let img = new Image();
+    img.onload = () => r(img);
+    img.src = url;
   });
-  return averageSet.map((array) =>
-    Math.floor(array.reduce((a, b) => a + b) / array.length)
-  );
 }
 
-function createFlag(hex, w, h, type) {
-  canvas.width = w;
-  canvas.height = h;
+async function getScott() {
+  var gameID = steam_game.value;
+  var scottID = scott_index.value;
+  var alignment = align.value;
 
-  // Initialize stuff
+  const ctx = canvas.getContext("2d");
 
-  var width = ctx.canvas.width;
-  var height = ctx.canvas.height;
-  var textHeight = 24;
-  ctx.font = `${textHeight}px "Lexend Deca"`;
+  var hero = await loadImage(
+    `https://cdn.cloudflare.steamstatic.com/steam/apps/${gameID}/library_hero.jpg`
+  ).catch(() => "404");
+  var scott = await loadImage(
+    stash.checked ? `public/wozstash.png` : `public/woz${scottID}.png`
+  ).catch(() => "404");
+  var logo = await loadImage(
+    `https://cdn.cloudflare.steamstatic.com/steam/apps/${gameID}/logo.png`
+  ).catch(() => "404");
 
-  ctx.clearRect(0, 0, width, height);
-
-  console.log(hex);
-
-  var hexColors = [];
-  var excessHex = "";
-
-  hex.forEach((compound) => {
-    if (compound.length < 6) excessHex = compound;
-    else hexColors.push(compound);
-  });
-
-  var rectWidth = width / hexColors.length;
-  var rectHeight = height / hexColors.length;
-  for (color in hexColors) {
-    ctx.fillStyle = "#" + hexColors[color];
-    if (type === "horiz") ctx.fillRect(rectWidth * color, 0, rectWidth, height);
-    else if (type === "vert")
-      ctx.fillRect(0, rectHeight * color, width, rectHeight);
+  if (scott === "404") {
+    console.log("Scott error: " + scottID);
+    return `Scott ID ${scottID} does not exist.`;
   }
-  if (excessHex.length > 0) {
-    var text = "+ " + excessHex.match(/.{1,2}/g).join(" ");
-    var textWidth = ctx.measureText(text).width;
-    ctx.strokeStyle = "black";
-    ctx.lineWidth = 4;
-    ctx.fillStyle = "white";
-    ctx.strokeText(text, width - (textWidth + 8), height - textHeight / 2);
-    ctx.fillText(text, width - (textWidth + 8), height - textHeight / 2);
+  if (hero === "404" || logo === "404") {
+    console.log("404 error: " + gameID);
+    return `Steam ID ${gameID} does not have logo, hero image, or does not exist.`;
   }
+  var xalign;
+  switch (alignment) {
+    case "left":
+      xalign = 0;
+      break;
+    case "right":
+      xalign = -950;
+      break;
+    default:
+      xalign = -505;
+      break;
+  }
+  console.log("Generating: " + gameID);
+  ctx.drawImage(hero, xalign, 0, 2229, 720);
+  ctx.drawImage(scott, 0, 0, 1280, 720);
+
+  const newHeight = 800 / (logo.width / logo.height);
+  ctx.fillStyle = "#000";
+  ctx.shadowColor = "#000";
+  ctx.shadowBlur = 16;
+
+  if (stash.checked)
+    ctx.drawImage(
+      logo,
+      400,
+      Math.min(560 - newHeight / 2, 669 - newHeight),
+      800,
+      newHeight
+    );
+  else
+    ctx.drawImage(logo, 64, Math.max(240 - newHeight / 2, 32), 800, newHeight);
 }
 
-const clamp = (n, mi, ma) => Math.max(mi, Math.min(n, ma));
-
-function lightenColor(color, mult) {
-  return [
-    clamp(color[0] + (mult / 100) * (255 - color[0]), 0, 255),
-    clamp(color[1] + (mult / 100) * (255 - color[1]), 0, 255),
-    clamp(color[2] + (mult / 100) * (255 - color[2]), 0, 255),
-  ];
-}
-function darkenColor(color, mult) {
-  return [
-    clamp(color[0] - (mult / 100) * color[0], 0, 255),
-    clamp(color[1] - (mult / 100) * color[1], 0, 255),
-    clamp(color[2] - (mult / 100) * color[2], 0, 255),
-  ];
-}
-
-function arrayToColor(color) {
-  return (
-    "#" + color.map((x) => Math.floor(x).toString(16).padStart(2, "0")).join("")
-  );
-}
+generateButton.addEventListener("click", getScott);
