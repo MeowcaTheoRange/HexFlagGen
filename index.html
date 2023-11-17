@@ -1,29 +1,70 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
   <head>
-    <link rel="stylesheet" href="styles/globals.css" />
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>HexFlagGen</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="styles/normal.css" />
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Lexend+Deca:wght@100;200;300;400;500;600;700;800;900&display=swap");
+
+      :root {
+        --base-scale: 16px;
+
+        --background-color: hsl(0, 0%, 15%);
+        --color: hsl(0, 0%, 85%);
+        --accent-color: #808080;
+        --accent-color-fg: hsl(0, 0%, 95%);
+        --font-family: "Lexend Deca";
+        --document-width: 40em;
+      }
+
+      * {
+        transition: background-color 0.125s, color 0.125s;
+      }
+    </style>
   </head>
   <body>
     <section>
       <h1>HexFlagGen</h1>
+      <label for="size_width"
+        ><input
+          type="number"
+          style="width: 8ch"
+          min="0"
+          max="64"
+          value="16"
+          onchange="document.documentElement.style.setProperty('--base-scale', event.target.value + 'px')"
+        />
+        UI scale</label
+      ><br /><label for="checkbox" class="checkbox">
+        <input
+          type="checkbox"
+          id="checkbox"
+          onchange="event.target.checked ? document.documentElement.classList.add('base') : document.documentElement.classList.remove('base')"
+        />
+        <span class="checkbox">O</span>
+        Base style
+      </label>
       <p>by <a href="https://abtmtr.link/">MeowcaTheoRange</a></p>
       <p>
         Welcome, here you can make a flag out of the hexadecimal bytes of your
         choice!
       </p>
     </section>
+    <hr />
     <section>
       <label for="data">Generator string</label><br />
       <input
         type="text"
         id="data"
-        value="FF400000C0FF8000FF80FF00FF"
+        value="09F911029D74E35BD84156C5635688C0"
         style="width: 100%"
       /><br />
       <button id="generateButton">Generate!</button>
     </section>
     <section>
-      <label for="size_width">Size</label><br />
       <input
         type="number"
         id="size_width"
@@ -42,14 +83,17 @@
         value="200"
       />
       <label for="size_height">Height (px)</label><br />
-      <label for="flag_type">Flag type</label><br />
       <select id="flag_type">
         <option value="horiz" selected>Horizontal</option>
         <option value="vert">Vertical</option>
       </select>
+      <label for="flag_type">Flag type</label>
     </section>
+    <hr />
     <section>
-      <p>Hex: <span class="monospace" id="hexdisplay">...</span></p>
+      <p>
+        Hex: <code><span id="hexdisplay">...</span></code>
+      </p>
       <canvas id="canvas" width="300" height="200"></canvas>
     </section>
     <script src="scripts/index.js"></script>

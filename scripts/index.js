@@ -24,18 +24,18 @@ function getData() {
     size_height.value,
     flag_type.value
   );
-  // var ac = averageColors(hexValue);
-  // console.log(ac);
-  // root.style.setProperty(
-  //   "--background-color",
-  //   arrayToColor(darkenColor(ac, 70))
-  // );
-  // root.style.setProperty("--color", arrayToColor(lightenColor(ac, 70)));
-  // root.style.setProperty("--accent-color", arrayToColor(ac));
-  // root.style.setProperty(
-  //   "--accent-color-fg",
-  //   arrayToColor(lightenColor(ac, 90))
-  // );
+  var ac = averageColors(hexValue);
+  console.log(ac);
+  root.style.setProperty(
+    "--background-color",
+    arrayToColor(darkenColor(ac, 70))
+  );
+  root.style.setProperty("--color", arrayToColor(lightenColor(ac, 70)));
+  root.style.setProperty("--accent-color", arrayToColor(ac));
+  root.style.setProperty(
+    "--accent-color-fg",
+    arrayToColor(lightenColor(ac, 90))
+  );
 }
 generateButton.addEventListener("click", getData);
 
