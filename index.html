@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link rel="stylesheet" href="styles/globals.css" />
+  </head>
+  <body>
+    <section>
+      <h1>HexFlagGen</h1>
+      <p>by <a href="https://abtmtr.link/">MeowcaTheoRange</a></p>
+      <p>
+        Welcome, here you can make a flag out of the hexadecimal bytes of your
+        choice!
+      </p>
+    </section>
+    <section>
+      <label for="data">Generator string</label><br />
+      <input
+        type="text"
+        id="data"
+        value="FF400000C0FF8000FF80FF00FF"
+        style="width: 100%"
+      /><br />
+      <button id="generateButton">Generate!</button>
+    </section>
+    <section>
+      <label for="size_width">Size</label><br />
+      <input
+        type="number"
+        id="size_width"
+        style="width: 8ch"
+        min="0"
+        max="3000"
+        value="300"
+      />
+      <label for="size_width">Width (px)</label><br />
+      <input
+        type="number"
+        id="size_height"
+        style="width: 8ch"
+        min="0"
+        max="3000"
+        value="200"
+      />
+      <label for="size_height">Height (px)</label><br />
+      <label for="flag_type">Flag type</label><br />
+      <select id="flag_type">
+        <option value="horiz" selected>Horizontal</option>
+        <option value="vert">Vertical</option>
+      </select>
+    </section>
+    <section>
+      <p>Hex: <span class="monospace" id="hexdisplay">...</span></p>
+      <canvas id="canvas" width="300" height="200"></canvas>
+    </section>
+    <script src="scripts/index.js"></script>
+  </body>
+</html>

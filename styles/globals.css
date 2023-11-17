@@ -1,0 +1,11 @@
+@import "normal.css";
+
+.monospace {
+  font-family: monospace;
+}
+
+.horiz {
+  display: inline-block;
+  vertical-align: top;
+  margin: 0 0.25em;
+}

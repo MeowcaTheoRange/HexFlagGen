@@ -1,0 +1,140 @@
+@import url("https://fonts.googleapis.com/css2?family=Lexend+Deca:wght@100;200;300;400;500;600;700;800;900&display=swap");
+
+:root {
+  --background-color: hsl(0, 0%, 15%);
+  --color: hsl(0, 0%, 85%);
+  --accent-color: #808080;
+  --accent-color-fg: hsl(0, 0%, 95%);
+  --font-size: 16px;
+  --font-family: "Lexend Deca";
+}
+
+/* Document form */
+
+body {
+  width: 100vw;
+  max-width: 640px;
+  margin: auto;
+  padding: 10px;
+}
+
+/* Size and type normalize */
+
+html {
+  font-size: var(--font-size);
+  background-color: var(--background-color);
+  color: var(--color);
+}
+
+h1 {
+  font-size: 2em;
+  line-height: 1.5em;
+  margin: 0;
+  margin-bottom: 0.125em;
+}
+
+h2 {
+  font-size: 1.5em;
+  line-height: 1.25em;
+  margin: 0;
+  margin-bottom: 0.25em;
+}
+
+h3 {
+  font-size: 1.1em;
+  line-height: 1.25em;
+  margin: 0;
+  margin-bottom: 0.25em;
+}
+
+p {
+  font-size: 1em;
+  line-height: 1.25em;
+  margin: 0.5em 0;
+}
+
+small {
+  font-size: 0.75em;
+}
+
+/* Form normalize */
+
+html {
+  font-family: var(--font-family);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+*:focus {
+  outline: 2px solid var(--accent-color-fg);
+}
+
+/* Interactive normalize */
+
+a {
+  color: var(--accent-color);
+}
+
+a:hover,
+a:focus {
+  opacity: 0.8;
+}
+
+a:active {
+  opacity: 0.5;
+}
+
+button,
+input[type="button"],
+input[type="submit"],
+input[type="reset"] {
+  border: 1px solid var(--accent-color);
+  padding: 0.25em 0.5em;
+  margin: 0.25em 0;
+  font-size: 1em;
+  font-family: inherit;
+  background-color: var(--accent-color);
+  color: var(--accent-color-fg);
+}
+
+button[data-outlined],
+input[type="button"][data-outlined],
+input[type="submit"][data-outlined],
+input[type="reset"][data-outlined] {
+  border: 1px solid var(--accent-color);
+  background-color: var(--background-color);
+  color: var(--accent-color);
+}
+
+button:hover,
+input[type="button"]:hover,
+input[type="submit"]:hover,
+input[type="reset"]:hover,
+button:focus,
+input[type="button"]:focus,
+input[type="submit"]:focus,
+input[type="reset"]:focus {
+  opacity: 0.8;
+}
+button:active,
+input[type="button"]:active,
+input[type="submit"]:active,
+input[type="reset"]:active {
+  opacity: 0.5;
+}
+
+input[type="text"],
+input[type="number"],
+input[type="email"],
+select,
+textarea {
+  font-family: inherit;
+  border: 1px solid var(--color);
+  padding: 0.25em 0.5em;
+  margin: 0.25em 0;
+  font-size: 1em;
+  background-color: var(--background-color);
+  color: var(--color);
+}
